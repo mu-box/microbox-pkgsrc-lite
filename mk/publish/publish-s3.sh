@@ -7,7 +7,7 @@ detect_platform() {
     echo "SmartOS"
   elif [ $(uname | grep 'Linux') ]; then
     echo "Linux"
-  fi    
+  fi
 }
 
 publish_file() {
@@ -18,12 +18,12 @@ publish_file() {
   echo $file
   mkdir -p /content/packages/pkgsrc/${project}/info/${platform}/
   pkg_info -X /content/packages/pkgsrc/${project}/${platform}/All/${file} > /content/packages/pkgsrc/${project}/info/${platform}/${file}.info
-  aws s3 cp /content/packages/pkgsrc/${project}/${platform}/All/${file} s3://pkgsrc.nanobox.io/${user}/${project}/${platform}/${file} --acl public-read
-  aws s3 cp /content/packages/pkgsrc/${project}/info/${platform}/${file}.info s3://pkgsrc.nanobox.io/${user}/${project}/info/${platform}/${file}.info --acl public-read
+  aws s3 cp /content/packages/pkgsrc/${project}/${platform}/All/${file} s3://pkgsrc.microbox.cloud/${user}/${project}/${platform}/${file} --acl public-read
+  aws s3 cp /content/packages/pkgsrc/${project}/info/${platform}/${file}.info s3://pkgsrc.microbox.cloud/${user}/${project}/info/${platform}/${file}.info --acl public-read
 }
 
 generate_summary() {
-  aws s3 sync s3://pkgsrc.nanobox.io/${user}/${project}/info/${platform}/ /content/packages/pkgsrc/${project}/info/${platform}/
+  aws s3 sync s3://pkgsrc.microbox.cloud/${user}/${project}/info/${platform}/ /content/packages/pkgsrc/${project}/info/${platform}/
   cat /content/packages/pkgsrc/${project}/info/${platform}/*.info > /content/packages/pkgsrc/${project}/${platform}/All/pkg_summary
   rm /content/packages/pkgsrc/${project}/${platform}/All/pkg_summary.bz2
   rm /content/packages/pkgsrc/${project}/${platform}/All/pkg_summary.gz
@@ -35,15 +35,15 @@ update_summary() {
   user=$1
   project=$2
   platform=$3
-  aws s3 cp /content/packages/pkgsrc/${project}/${platform}/All/pkg_summary.bz2 s3://pkgsrc.nanobox.io/${user}/${project}/${platform}/pkg_summary.bz2 --acl public-read --cache-control 'no-cache'
-  aws s3 cp /content/packages/pkgsrc/${project}/${platform}/All/pkg_summary.gz s3://pkgsrc.nanobox.io/${user}/${project}/${platform}/pkg_summary.gz --acl public-read --cache-control 'no-cache'
+  aws s3 cp /content/packages/pkgsrc/${project}/${platform}/All/pkg_summary.bz2 s3://pkgsrc.microbox.cloud/${user}/${project}/${platform}/pkg_summary.bz2 --acl public-read --cache-control 'no-cache'
+  aws s3 cp /content/packages/pkgsrc/${project}/${platform}/All/pkg_summary.gz s3://pkgsrc.microbox.cloud/${user}/${project}/${platform}/pkg_summary.gz --acl public-read --cache-control 'no-cache'
 }
 
 publish_all() {
   user=$1
   project=$2
   platform=$3
-  uploaded=$(aws s3 ls s3://pkgsrc.nanobox.io/${user}/${project}/${platform}/ | awk '{print $4}')
+  uploaded=$(aws s3 ls s3://pkgsrc.microbox.cloud/${user}/${project}/${platform}/ | awk '{print $4}')
   for file in $(ls /content/packages/pkgsrc/${project}/${platform}/All/*)
   do
     file=$(basename ${file})
@@ -56,4 +56,4 @@ publish_all() {
   update_summary ${user} ${project} ${platform}
 }
 
-publish_all ${NANOBOX_USER} ${NANOBOX_PROJECT} $(detect_platform)
+publish_all ${MICROBOX_USER} ${MICROBOX_PROJECT} $(detect_platform)

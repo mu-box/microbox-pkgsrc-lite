@@ -22,7 +22,7 @@ publish_file() {
     -X POST \
     -H "Key: ${secret}" \
     --data-binary \@/content/packages/pkgsrc/${project}/${platform}/All/${file} \
-    https://pkgsrc.nanobox.io/${user}/${project}/${platform}/${file}
+    https://pkgsrc.microbox.cloud/${user}/${project}/${platform}/${file}
   echo ""
 }
 
@@ -31,7 +31,7 @@ publish_all() {
   user=$2
   project=$3
   platform=$4
-  uploaded=$(curl -k -s https://pkgsrc.nanobox.io/${user}/${project}/${platform}/ | sed 's/<a href=".*">//g;s,</a>.*$,,g;s/<.*>//g')
+  uploaded=$(curl -k -s https://pkgsrc.microbox.cloud/${user}/${project}/${platform}/ | sed 's/<a href=".*">//g;s,</a>.*$,,g;s/<.*>//g')
   for file in $(ls /content/packages/pkgsrc/${project}/${platform}/All/*)
   do
     file=$(basename ${file})
@@ -42,4 +42,4 @@ publish_all() {
   done
 }
 
-publish_all ${NANOBOX_SECRET} ${NANOBOX_USER} ${NANOBOX_PROJECT} $(detect_platform)
+publish_all ${MICROBOX_SECRET} ${MICROBOX_USER} ${MICROBOX_PROJECT} $(detect_platform)

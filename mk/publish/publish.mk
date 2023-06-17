@@ -25,7 +25,7 @@ sync-s3:
 	@../../mk/publish/sync-s3.sh
 
 sync-old:
-	@${PHASE_MSG} "Syncing Packages with pkgsrc.nanobox.io"
+	@${PHASE_MSG} "Syncing Packages with pkgsrc.microbox.cloud"
 	@../../mk/publish/sync.sh
 
 sync-s3-pkg-summary: sync-s3 generate-pkg-summary
@@ -33,7 +33,7 @@ sync-s3-pkg-summary: sync-s3 generate-pkg-summary
 	@../../mk/publish/sync-pkg-summary-s3.sh
 
 sync-old-pkg-summary: sync-old generate-pkg-summary
-	@${PHASE_MSG} "Synching pkg_summary with pkgsrc.nanobox.io"
+	@${PHASE_MSG} "Synching pkg_summary with pkgsrc.microbox.cloud"
 	@../../mk/publish/sync-pkg-summary.sh
 
 generate-pkg-summary:

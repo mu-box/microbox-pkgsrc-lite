@@ -7,7 +7,7 @@ detect_platform() {
     echo "SmartOS"
   elif [ $(uname | grep 'Linux') ]; then
     echo "Linux"
-  fi    
+  fi
 }
 
 download_file() {
@@ -19,14 +19,14 @@ download_file() {
   curl \
   -k \
   -o /content/packages/pkgsrc/${project}/${platform}/All/${file} \
-  https://pkgsrc.nanobox.io/${user}/${project}/${platform}/${file}
+  https://pkgsrc.microbox.cloud/${user}/${project}/${platform}/${file}
 }
 
 download_all() {
   user=$1
   project=$2
   platform=$3
-  uploaded=$(curl -k -s https://pkgsrc.nanobox.io/${user}/${project}/${platform}/ | sed 's/<a href=".*">//g;s,</a>.*$,,g;s/<.*>//g')
+  uploaded=$(curl -k -s https://pkgsrc.microbox.cloud/${user}/${project}/${platform}/ | sed 's/<a href=".*">//g;s,</a>.*$,,g;s/<.*>//g')
   for file in ${uploaded}
   do
     if [[ ! -f /content/packages/pkgsrc/${project}/${platform}/All/${file} ]]
@@ -36,4 +36,4 @@ download_all() {
   done
 }
 
-download_all ${NANOBOX_USER} ${NANOBOX_PROJECT} $(detect_platform)
+download_all ${MICROBOX_USER} ${MICROBOX_PROJECT} $(detect_platform)

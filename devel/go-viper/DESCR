@@ -5,7 +5,7 @@ Many Go projects are built using Viper including:
 * Hugo
 * EMC RexRay
 * Imgur's Incus
-* Nanobox/Nanopack
+* Mubox/Nanopack
 * Docker Notary
 * BloomApi
 

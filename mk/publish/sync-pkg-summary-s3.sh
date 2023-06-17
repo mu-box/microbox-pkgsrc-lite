@@ -14,8 +14,8 @@ update_summary() {
   user=$1
   project=$2
   platform=$3
-  aws s3 cp /content/packages/pkgsrc/${project}/${platform}/All/pkg_summary.bz2 s3://pkgsrc.nanobox.io/${user}/${project}/${platform}/pkg_summary.bz2 --acl public-read --cache-control 'no-cache'
-  aws s3 cp /content/packages/pkgsrc/${project}/${platform}/All/pkg_summary.gz s3://pkgsrc.nanobox.io/${user}/${project}/${platform}/pkg_summary.gz --acl public-read --cache-control 'no-cache'
+  aws s3 cp /content/packages/pkgsrc/${project}/${platform}/All/pkg_summary.bz2 s3://pkgsrc.microbox.cloud/${user}/${project}/${platform}/pkg_summary.bz2 --acl public-read --cache-control 'no-cache'
+  aws s3 cp /content/packages/pkgsrc/${project}/${platform}/All/pkg_summary.gz s3://pkgsrc.microbox.cloud/${user}/${project}/${platform}/pkg_summary.gz --acl public-read --cache-control 'no-cache'
 }
 
-update_summary ${NANOBOX_USER} ${NANOBOX_PROJECT} $(detect_platform) 
+update_summary ${MICROBOX_USER} ${MICROBOX_PROJECT} $(detect_platform)

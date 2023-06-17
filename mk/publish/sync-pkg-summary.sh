@@ -22,7 +22,7 @@ publish_file() {
     -X POST \
     -H "Key: ${secret}" \
     --data-binary \@/content/packages/pkgsrc/${project}/${platform}/All/${file} \
-    https://pkgsrc.nanobox.io/${user}/${project}/${platform}/${file}
+    https://pkgsrc.microbox.cloud/${user}/${project}/${platform}/${file}
   echo ""
 }
 
@@ -35,4 +35,4 @@ update_summary() {
   publish_file ${secret} ${user} ${project} ${platform} pkg_summary.gz
 }
 
-update_summary ${NANOBOX_SECRET} ${NANOBOX_USER} ${NANOBOX_PROJECT} $(detect_platform)
+update_summary ${MICROBOX_SECRET} ${MICROBOX_USER} ${MICROBOX_PROJECT} $(detect_platform)

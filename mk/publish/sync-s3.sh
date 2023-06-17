@@ -17,14 +17,14 @@ publish_file() {
   file=$4
   echo $file
   mkdir -p /content/packages/pkgsrc/${project}/info/${platform}/
-  aws s3 cp /content/packages/pkgsrc/${project}/${platform}/All/${file} s3://pkgsrc.nanobox.io/${user}/${project}/${platform}/${file} --acl public-read
+  aws s3 cp /content/packages/pkgsrc/${project}/${platform}/All/${file} s3://pkgsrc.microbox.cloud/${user}/${project}/${platform}/${file} --acl public-read
 }
 
 publish_all() {
   user=$1
   project=$2
   platform=$3
-  uploaded=$(aws s3 ls s3://pkgsrc.nanobox.io/${user}/${project}/${platform}/ | awk '{print $4}')
+  uploaded=$(aws s3 ls s3://pkgsrc.microbox.cloud/${user}/${project}/${platform}/ | awk '{print $4}')
   for file in $(ls /content/packages/pkgsrc/${project}/${platform}/All/*)
   do
     file=$(basename ${file})
@@ -35,4 +35,4 @@ publish_all() {
   done
 }
 
-publish_all ${NANOBOX_USER} ${NANOBOX_PROJECT} $(detect_platform)
+publish_all ${MICROBOX_USER} ${MICROBOX_PROJECT} $(detect_platform)

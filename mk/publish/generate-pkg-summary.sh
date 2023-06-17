@@ -18,7 +18,7 @@ generate_info() {
     file=$(basename ${file})
     if [ ! -f /content/packages/pkgsrc/${project}/info/${platform}/${file}.info ]; then
       pkg_info -X /content/packages/pkgsrc/${project}/${platform}/All/${file} > /content/packages/pkgsrc/${project}/info/${platform}/${file}.info
-      aws s3 cp /content/packages/pkgsrc/${project}/info/${platform}/${file}.info s3://pkgsrc.nanobox.io/${user}/${project}/info/${platform}/${file}.info --acl public-read
+      aws s3 cp /content/packages/pkgsrc/${project}/info/${platform}/${file}.info s3://pkgsrc.microbox.cloud/${user}/${project}/info/${platform}/${file}.info --acl public-read
     fi
   done
 }
@@ -27,7 +27,7 @@ sync_info() {
   user=$1
   project=$2
   platform=$3
-  aws s3 sync s3://pkgsrc.nanobox.io/${user}/${project}/info/${platform}/ /content/packages/pkgsrc/${project}/info/${platform}/
+  aws s3 sync s3://pkgsrc.microbox.cloud/${user}/${project}/info/${platform}/ /content/packages/pkgsrc/${project}/info/${platform}/
 }
 
 generate_summary() {
@@ -41,6 +41,6 @@ generate_summary() {
   gzip /content/packages/pkgsrc/${project}/${platform}/All/pkg_summary
 }
 
-generate_info ${NANOBOX_USER} ${NANOBOX_PROJECT} $(detect_platform)
-sync_info ${NANOBOX_USER} ${NANOBOX_PROJECT} $(detect_platform)
-generate_summary ${NANOBOX_USER} ${NANOBOX_PROJECT} $(detect_platform)
+generate_info ${MICROBOX_USER} ${MICROBOX_PROJECT} $(detect_platform)
+sync_info ${MICROBOX_USER} ${MICROBOX_PROJECT} $(detect_platform)
+generate_summary ${MICROBOX_USER} ${MICROBOX_PROJECT} $(detect_platform)

@@ -7,7 +7,7 @@ detect_platform() {
     echo "SmartOS"
   elif [ $(uname | grep 'Linux') ]; then
     echo "Linux"
-  fi    
+  fi
 }
 
 publish_file() {
@@ -22,7 +22,7 @@ publish_file() {
     -X POST \
     -H "Key: ${secret}" \
     --data-binary \@/content/packages/pkgsrc/${project}/${platform}/All/${file} \
-    https://pkgsrc.nanobox.io/${user}/${project}/${platform}/${file}
+    https://pkgsrc.microbox.cloud/${user}/${project}/${platform}/${file}
   echo ""
 }
 
@@ -35,7 +35,7 @@ update_summary() {
     -k \
     -X PUT \
     -H "Key: ${secret}" \
-    pkgsrc.nanobox.io/${user}/${project}/${platform}
+    pkgsrc.microbox.cloud/${user}/${project}/${platform}
 }
 
 publish_all() {
@@ -43,7 +43,7 @@ publish_all() {
   user=$2
   project=$3
   platform=$4
-  uploaded=$(curl -k -s https://pkgsrc.nanobox.io/${user}/${project}/${platform}/ | sed 's/<a href=".*">//g;s,</a>.*$,,g;s/<.*>//g')
+  uploaded=$(curl -k -s https://pkgsrc.microbox.cloud/${user}/${project}/${platform}/ | sed 's/<a href=".*">//g;s,</a>.*$,,g;s/<.*>//g')
   for file in $(ls /content/packages/pkgsrc/${project}/${platform}/All/*)
   do
     file=$(basename ${file})
@@ -55,4 +55,4 @@ publish_all() {
   update_summary ${secret} ${user} ${project} ${platform}
 }
 
-publish_all ${NANOBOX_SECRET} ${NANOBOX_USER} ${NANOBOX_PROJECT} $(detect_platform)
+publish_all ${MICROBOX_SECRET} ${MICROBOX_USER} ${MICROBOX_PROJECT} $(detect_platform)
